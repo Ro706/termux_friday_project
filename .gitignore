@@ -1,0 +1,7 @@
+.env
+.venv/
+*.jpg
+data/database.db
+data/vault/
+data/VectorDB/
+GEMINI.md

@@ -1,0 +1,17 @@
+python-dotenv
+beautifulsoup4
+rich
+groq
+requests
+wikipedia
+cohere
+flask
+flask-cors
+flask-sqlalchemy
+googlesearch-python
+mtranslate
+psutil
+pyjokes
+textblob
+PyPDF2
+markdown
