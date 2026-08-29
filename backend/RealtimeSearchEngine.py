@@ -92,15 +92,33 @@ def RealtimeInformation(prompt):
     ]
 
     # Generate completion
-    completion = client.chat.completions.create(
-        model="llama-3.3-70b-specdec",
-        messages=system_chat_dynamic + messages + [{"role": "user", "content": prompt}],
-        max_completion_tokens=2048,
-        temperature=0.7,
-        top_p=1,
-        stream=True,
-        stop=None
-    )
+    completion = None
+    models = ["qwen/qwen3.8-27b", "qwen/qwen3.6-27b"]
+    
+    for model_name in models:
+        try:
+            completion = client.chat.completions.create(
+                model=model_name,
+                messages=system_chat_dynamic + messages + [{"role": "user", "content": prompt}],
+                max_completion_tokens=2048,
+                temperature=0.7,
+                top_p=1,
+                stream=True,
+                stop=None
+            )
+            # If we successfully start a stream, break the model loop
+            if completion:
+                print(f"[System]: Using AI Model: {model_name}")
+                break
+        except Exception as e:
+            if "rate_limit_exceeded" in str(e).lower() or "not_found" in str(e).lower():
+                print(f"[Warning]: {model_name} failed or rate limit reached. Trying fallback...")
+                continue
+            else:
+                raise e
+
+    if not completion:
+        return "Error: All available AI models are currently busy or rate-limited. Please try again later."
 
     Answer = ""
     for chunk in completion:
@@ -114,15 +132,6 @@ def RealtimeInformation(prompt):
     AddMessage("assistant", Answer)
 
     return AnswerModifier(Answer)
-
-# CLI
-if __name__ == "__main__":
-    while True:
-        user_input = input("Enter your prompt: ")
-        if user_input.lower() == "exit":
-            break
-        response = RealtimeInformation(user_input)
-        print(f"Chatbot: {response}")
 
 # CLI
 if __name__ == "__main__":
