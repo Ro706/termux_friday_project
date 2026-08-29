@@ -93,7 +93,7 @@ def RealtimeInformation(prompt):
 
     # Generate completion
     completion = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.3-70b-specdec",
         messages=system_chat_dynamic + messages + [{"role": "user", "content": prompt}],
         max_completion_tokens=2048,
         temperature=0.7,

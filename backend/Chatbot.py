@@ -60,7 +60,7 @@ def AnswerModifier(Answer):
 def Chatbot(query, context=None):
     global client
     # List of supported models to try in order of preference
-    models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
+    models = ["llama-3.3-70b-specdec", "llama-3.1-8b-instant", "mixtral-8x7b-32768", "gemma2-9b-it"]
     
     try:
         if not client:

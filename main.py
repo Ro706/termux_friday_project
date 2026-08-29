@@ -2,6 +2,7 @@ import os
 # Suppress pygame support message
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import sys
+import getpass
 import threading
 import subprocess
 from dotenv import load_dotenv
@@ -275,7 +276,7 @@ def authenticate():
     speak("Authentication required. Please enter your password.")
     
     while attempts > 0:
-        password = input(f"\n[Security]: Enter Password ({attempts} attempts left): ").strip()
+        password = getpass.getpass(f"\n[Security]: Enter Password ({attempts} attempts left): ").strip()
         
         if password == "rohit21":
             speak("Access granted. Welcome back, Rohit.")
